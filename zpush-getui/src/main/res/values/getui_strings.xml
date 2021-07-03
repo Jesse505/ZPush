@@ -1,0 +1,3 @@
+<resources>
+    <string name="zpush_getui_push_client_name">com.android.jesse.zpush_getui.GeTuiPushClient</string>
+</resources>

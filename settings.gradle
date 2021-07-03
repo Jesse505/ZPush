@@ -1,0 +1,2 @@
+include ':app', ':zpush-core', ':zpush-getui'
+rootProject.name='ZPush'
