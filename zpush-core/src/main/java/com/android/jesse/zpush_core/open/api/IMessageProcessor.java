@@ -5,6 +5,13 @@ import android.content.Context;
 public interface IMessageProcessor {
 
     /**
+     * 设备id回调
+     * @param context
+     * @param cid
+     */
+    void onReceiveClientId(Context context, String cid);
+
+    /**
      * 透传消息回调
      *
      * @param context

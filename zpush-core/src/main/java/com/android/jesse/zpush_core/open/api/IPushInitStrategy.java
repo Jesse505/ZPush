@@ -18,27 +18,27 @@
 package com.android.jesse.zpush_core.open.api;
 
 /**
- * 推送初始化监听器
+ * 推送初始化选择策略
  *
  */
-public interface IPushInitListener {
+public interface IPushInitStrategy {
 
     /**
-     * 推送初始化监听
+     * 优先推送平台初始化
      *
      * @param platformCode 平台码
      * @param platformName 平台名
      * @return {@code true: 选中} <br> {@code false: 不选中}
      */
-    boolean onInitPush(int platformCode, String platformName);
+    boolean priorPushInit(int platformCode, String platformName);
 
     /**
-     * 默认推送初始化监听
+     * 备份推送平台初始化
      *
      * @param platformCode 平台码
      * @param platformName 平台名
      * @return {@code true: 选中} <br> {@code false: 不选中}
      */
-    boolean onInitDefaultPush(int platformCode, String platformName);
+    boolean backupPushInit(int platformCode, String platformName);
 
 }

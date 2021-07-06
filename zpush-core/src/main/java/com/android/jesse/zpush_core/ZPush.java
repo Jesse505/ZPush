@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.android.jesse.zpush_core.open.ZPushManager;
 import com.android.jesse.zpush_core.open.api.IMessageProcessor;
-import com.android.jesse.zpush_core.open.api.IPushInitListener;
+import com.android.jesse.zpush_core.open.api.IPushInitStrategy;
 
 public final class ZPush {
 
@@ -20,8 +20,8 @@ public final class ZPush {
      * @param context
      * @param initListener
      */
-    public static void init(@NonNull Context context, @NonNull IPushInitListener initListener) {
-        ZPushManager.getInstance().init(context, initListener);
+    public static void init(@NonNull Context context, @NonNull IPushInitStrategy initListener, IMessageProcessor messageProcessor) {
+        ZPushManager.getInstance().init(context, initListener, messageProcessor);
     }
 
     /**
@@ -107,15 +107,6 @@ public final class ZPush {
      */
     public static String getPlatformName() {
         return ZPushManager.getInstance().getPlatformName();
-    }
-
-    /**
-     * 设置推送消息处理器
-     *
-     * @param processor
-     */
-    public static void setMessageProcessor(IMessageProcessor processor) {
-        ZPushManager.getInstance().setIMessageProcessor(processor);
     }
 
     /**

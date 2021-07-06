@@ -15,6 +15,14 @@ public class MessageProcessorDelegate implements IMessageProcessor {
         this.messageProcessor = messageProcessor;
     }
 
+
+    @Override
+    public void onReceiveClientId(Context context, String cid) {
+        if (messageProcessor != null) {
+            messageProcessor.onReceiveClientId(context, cid);
+        }
+    }
+
     @Override
     public void onReceivePassThroughMessage(Context context, String messageData, int platformCode) {
         if (messageProcessor != null) {

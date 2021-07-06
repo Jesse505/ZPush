@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.android.jesse.zpush_core.api.IPushClient;
-import com.android.jesse.zpush_core.open.api.IPushInitListener;
+import com.android.jesse.zpush_core.open.api.IPushInitStrategy;
 import com.android.jesse.zpush_core.platform.api.IPlatformChoose;
 
 import java.util.Arrays;
@@ -29,7 +29,7 @@ public class DefaultPlatformChooseImpl implements IPlatformChoose {
 
 
     @Override
-    public IPushClient choosePushPlatform(@NonNull Context context, @NonNull final IPushInitListener initListener) {
+    public IPushClient choosePushPlatform(@NonNull Context context, @NonNull final IPushInitStrategy initListener) {
         LinkedHashMap<String, String> supportPushPlatformMap = findAllSupportPushPlatform(context);
         if (supportPushPlatformMap.isEmpty()) {
             throw new IllegalArgumentException("have none push platform,check AndroidManifest.xml is have meta-data name is start with " + META_DATA_PUSH_HEADER);
@@ -39,12 +39,12 @@ public class DefaultPlatformChooseImpl implements IPlatformChoose {
         return (client = _choosePushPlatform(supportPushPlatformMap, new IPushInitIntercepter() {
             @Override
             public boolean intercept(int platformCode, String platformName) {
-                return !initListener.onInitPush(platformCode, platformName);
+                return !initListener.priorPushInit(platformCode, platformName);
             }
         })) == null ? _choosePushPlatform(supportPushPlatformMap, new IPushInitIntercepter() {
             @Override
             public boolean intercept(int platformCode, String platformName) {
-                return !initListener.onInitDefaultPush(platformCode, platformName);
+                return !initListener.backupPushInit(platformCode, platformName);
             }
         }) : client;
     }

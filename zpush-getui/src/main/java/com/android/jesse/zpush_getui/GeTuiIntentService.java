@@ -32,7 +32,7 @@ public class GeTuiIntentService extends GTIntentService {
      */
     @Override
     public void onReceiveClientId(Context context, String s) {
-        Log.e("PUSH_LOG", "clientId > " + s);
+        ZPush.getMessageProcessor().onReceiveClientId(context, s);
     }
 
     /**

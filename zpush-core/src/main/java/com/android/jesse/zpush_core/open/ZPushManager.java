@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.android.jesse.zpush_core.api.IPushClient;
 import com.android.jesse.zpush_core.message.MessageProcessorDelegate;
 import com.android.jesse.zpush_core.open.api.IMessageProcessor;
-import com.android.jesse.zpush_core.open.api.IPushInitListener;
+import com.android.jesse.zpush_core.open.api.IPushInitStrategy;
 import com.android.jesse.zpush_core.platform.DefaultPlatformChooseImpl;
 import com.android.jesse.zpush_core.platform.api.IPlatformChoose;
 
@@ -46,8 +46,9 @@ public class ZPushManager implements IPushClient, IPlatformChoose {
      * @param context
      * @param initListener 初始化回调
      */
-    public void init(@NonNull Context context, @NonNull IPushInitListener initListener) {
+    public void init(@NonNull Context context, @NonNull IPushInitStrategy initListener, IMessageProcessor messageProcessor) {
         mContext = context.getApplicationContext();
+        mIMessageProcessor = new MessageProcessorDelegate(messageProcessor);
         //choose custom push platform
         mIPushClient = choosePushPlatform(mContext, initListener);
         if (mIPushClient != null) {
@@ -131,16 +132,12 @@ public class ZPushManager implements IPushClient, IPlatformChoose {
 
 
     @Override
-    public IPushClient choosePushPlatform(@NonNull Context context, @NonNull IPushInitListener initListener) {
+    public IPushClient choosePushPlatform(@NonNull Context context, @NonNull IPushInitStrategy initListener) {
         return mIPlatformChoose.choosePushPlatform(context, initListener);
     }
 
     public IMessageProcessor getIMessageProcessor() {
         return mIMessageProcessor;
-    }
-
-    public void setIMessageProcessor(IMessageProcessor mIMessageProcessor) {
-        this.mIMessageProcessor = new MessageProcessorDelegate(mIMessageProcessor);
     }
 
     private void checkInitialize() {
