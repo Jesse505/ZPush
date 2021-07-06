@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.android.jesse.zpush_core.open.ZPushManager;
+import com.android.jesse.zpush_core.open.api.IMessageProcessor;
 import com.android.jesse.zpush_core.open.api.IPushInitListener;
 
 public final class ZPush {
@@ -42,8 +43,8 @@ public final class ZPush {
      *
      * @param alias 别名
      */
-    public static void bindAlias(String alias) {
-        ZPushManager.getInstance().bindAlias(alias);
+    public static void bindAlias(String alias, String sn) {
+        ZPushManager.getInstance().bindAlias(alias, sn);
     }
 
     /**
@@ -51,8 +52,8 @@ public final class ZPush {
      *
      * @param alias 别名
      */
-    public static void unBindAlias(String alias) {
-        ZPushManager.getInstance().unBindAlias(alias);
+    public static void unBindAlias(String alias, boolean isSelf, String sn) {
+        ZPushManager.getInstance().unBindAlias(alias, isSelf, sn);
     }
 
     /**
@@ -106,6 +107,24 @@ public final class ZPush {
      */
     public static String getPlatformName() {
         return ZPushManager.getInstance().getPlatformName();
+    }
+
+    /**
+     * 设置推送消息处理器
+     *
+     * @param processor
+     */
+    public static void setMessageProcessor(IMessageProcessor processor) {
+        ZPushManager.getInstance().setIMessageProcessor(processor);
+    }
+
+    /**
+     * 获取推送消息处理器
+     *
+     * @return
+     */
+    public static IMessageProcessor getMessageProcessor() {
+        return ZPushManager.getInstance().getIMessageProcessor();
     }
 
 }
